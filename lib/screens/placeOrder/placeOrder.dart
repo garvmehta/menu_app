@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:menu_app/provider/categories_provider.dart';
 import 'package:menu_app/screens/placeOrder/widgets/accordian.dart';
 import 'package:menu_app/screens/placeOrder/widgets/place_order_btn.dart';
+import 'package:provider/provider.dart';
 
 class PlaceOrder extends StatefulWidget {
   const PlaceOrder({super.key});
@@ -11,6 +13,12 @@ class PlaceOrder extends StatefulWidget {
 
 class _PlaceOrderState extends State<PlaceOrder> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<Categories>(context, listen: false).fetchCategories();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -28,11 +36,19 @@ class _PlaceOrderState extends State<PlaceOrder> {
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.7,
-              child: ListView(children: const [
-                Accordian(),
-              ]),
-            ),
+                height: MediaQuery.of(context).size.height * 0.75,
+                child: ListView.builder(
+                    itemCount:
+                        Provider.of<Categories>(context).categories.length,
+                    itemBuilder: (context, index) {
+                      return Accordian(
+                          Products: Provider.of<Categories>(context)
+                              .categories[index]
+                              .Products,
+                          name: Provider.of<Categories>(context)
+                              .categories[index]
+                              .name);
+                    })),
             const PlaceOrderBtn()
           ],
         ),

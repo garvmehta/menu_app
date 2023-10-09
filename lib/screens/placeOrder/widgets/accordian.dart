@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:menu_app/models/category_model.dart';
 import 'package:menu_app/screens/placeOrder/widgets/product_card.dart';
 
+// ignore: must_be_immutable
 class Accordian extends StatefulWidget {
-  const Accordian({super.key});
+  String name;
+  List<Product> Products;
+  Accordian({super.key, required this.Products, required this.name});
 
   @override
   State<Accordian> createState() => _AccordianState();
@@ -13,20 +17,23 @@ class _AccordianState extends State<Accordian> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(color: Color.fromRGBO(201, 199, 199, 1)))),
       child: Column(
         children: [
           ListTile(
             onTap: () => {setState(() => isOpen = !isOpen)},
             contentPadding: EdgeInsets.symmetric(horizontal: 6),
             title: Text(
-              'Category',
+              widget.name,
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
             ),
             trailing: FittedBox(
               child: Row(
                 children: [
-                  Text("3",
-                      style: TextStyle(
+                  Text(widget.Products.length.toString(),
+                      style: const TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.w500,
                           fontSize: 17)),
@@ -41,7 +48,13 @@ class _AccordianState extends State<Accordian> {
           ),
           (isOpen)
               ? Column(
-                  children: [ProductCard()],
+                  children: widget.Products.map((Product e) {
+                    return ProductCard(
+                      isBestSeller: e.inStock,
+                      name: e.name,
+                      price: e.price,
+                    );
+                  }).toList(),
                 )
               : SizedBox()
         ],

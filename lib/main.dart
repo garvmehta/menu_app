@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:menu_app/provider/categories_provider.dart';
+import 'package:menu_app/provider/order_provider.dart';
 import 'package:menu_app/screens/placeOrder/placeOrder.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => Categories()),
+      ChangeNotifierProvider(create: (context) => Order()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

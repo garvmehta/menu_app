@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:menu_app/provider/order_provider.dart';
+import 'package:provider/provider.dart';
 
 class PlaceOrderBtn extends StatelessWidget {
   const PlaceOrderBtn({super.key});
@@ -12,14 +14,14 @@ class PlaceOrderBtn extends StatelessWidget {
         decoration: BoxDecoration(
             color: Color.fromRGBO(255, 160, 0, 1),
             borderRadius: BorderRadius.circular(5)),
-        child: const Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Expanded(
+            const Expanded(
               flex: 1,
               child: SizedBox(),
             ),
-            Expanded(
+            const Expanded(
               flex: 1,
               child: Text('Place Order',
                   textAlign: TextAlign.center,
@@ -30,9 +32,9 @@ class PlaceOrderBtn extends StatelessWidget {
             ),
             Expanded(
               flex: 1,
-              child: Text("\$200",
+              child: Text("\$ ${Provider.of<Order>(context).totalAmount}",
                   textAlign: TextAlign.right,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 17,
                       color: Colors.white,
                       fontWeight: FontWeight.w500)),
